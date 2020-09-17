@@ -1,227 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="assets/style.css" />
-    <script
-      src="https://kit.fontawesome.com/53455dd245.js"
-      crossorigin="anonymous"
-    ></script>
-    <title>Work Day Planner</title>
-  </head>
-  <body>
-    <div class="jumbotron jumbotron-fluid">
-      <div class="container">
-        <div class="d-flex justify-content-between">
-          <div>
-            <h2 class="display-4 font-weight-bold" id="title-date"></h2>
-          </div>
-          <div class="align-self-end">
-            <h4 class="font-weight-bold" id="title-year"></h4>
-          </div>
-        </div>
-      </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/style.css" />
+  <title>Work Day Scheduler</title>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  <style>
+    .input{
+    color:black;
+    }
+  </style>  
+</head>
+<body>
+  <header class="jumbotron">
+    <h1 class="display-3">Work Day Scheduler</h1>
+    <p class="lead">A simple calendar app for scheduling your work day</p>
+    <p id="currentDay" class="lead"></p>
+  </header>
+  <div class="container">
+    <div class="time-block">
+      
     </div>
+  </div>
+  <script>
+    $(document).ready(function () {
+      generatePlanner();
+      var dailyPlanner = [];
+      if(localStorage.dailyPlanner != null){
+        dailyPlanner = JSON.parse(localStorage.dailyPlanner);
+        console.log(dailyPlanner);
+        for (let i = 9; i<dailyPlanner.length; i++){
+          console.log(dailyPlanner[i].hour);
+          // console.log(dailyPlanner[i].value);
+          for (var j = 9; j < 17; j++){
+              if(dailyPlanner[i].hour == `hour${j}`)
+              {
+                console.log(`hour${j}`);
+                $(`#hour${j}`).val(dailyPlanner[i].value);
+                $(`#lockIcon${j}`).removeClass('fa-unlock');
+                $(`#lockIcon${j}`).addClass('fa-lock');
+              }
+          }
+        }
+      } 
+      var m = moment().format("dddd, MMMM Do YYYY HH");
+      // console.log(m);
+      $("#currentDay").text(m);
 
-    <div class="container pb-5 mb-3">
-      <div class="table-responsive">
-        <table class="table">
-          <tbody id="schedule-table">
-            <tr id="09">
-              <th scope="row" class="align-middle time">09:00</th>
-              <td class="input-cell">
-                <textarea class="input-area" id="area-09"></textarea>
-              </td>
-              <td id="save-0900" class="align-middle save-button-cell">
-                <div class="text-center">
-                  <button
-                    class="btn btn-outline-secondary save-button"
-                    type="button"
-                  >
-                    <i class="far fa-save"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr id="10">
-              <th scope="row" class="align-middle time">10:00</th>
-              <td class="input-cell">
-                <textarea class="input-area" id="area-10"></textarea>
-              </td>
-              <td id="save-1000" class="align-middle save-button-cell">
-                <div class="text-center">
-                  <button
-                    class="btn btn-outline-secondary save-button"
-                    type="button"
-                  >
-                    <i class="far fa-save"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr id="11">
-              <th scope="row" class="align-middle time">11:00</th>
-              <td class="input-cell">
-                <textarea class="input-area" id="area-11"></textarea>
-              </td>
-              <td id="save-1100" class="align-middle save-button-cell">
-                <div class="text-center">
-                  <button
-                    class="btn btn-outline-secondary save-button"
-                    type="button"
-                  >
-                    <i class="far fa-save"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr id="12">
-              <th scope="row" class="align-middle time">12:00</th>
-              <td class="input-cell">
-                <textarea class="input-area" id="area-12"></textarea>
-              </td>
-              <td id="save-1200" class="align-middle save-button-cell">
-                <div class="text-center">
-                  <button
-                    class="btn btn-outline-secondary save-button"
-                    type="button"
-                  >
-                    <i class="far fa-save"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr id="13">
-              <th scope="row" class="align-middle time">13:00</th>
-              <td class="input-cell">
-                <textarea class="input-area" id="area-13"></textarea>
-              </td>
-              <td id="save-1300" class="align-middle save-button-cell">
-                <div class="text-center">
-                  <button
-                    class="btn btn-outline-secondary save-button"
-                    type="button"
-                  >
-                    <i class="far fa-save"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr id="14">
-              <th scope="row" class="align-middle time">14:00</th>
-              <td class="input-cell">
-                <textarea class="input-area" id="area-14"></textarea>
-              </td>
-              <td id="save-1400" class="align-middle save-button-cell">
-                <div class="text-center">
-                  <button
-                    class="btn btn-outline-secondary save-button"
-                    type="button"
-                  >
-                    <i class="far fa-save"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr id="15">
-              <th scope="row" class="align-middle time">15:00</th>
-              <td class="input-cell">
-                <textarea class="input-area" id="area-15"></textarea>
-              </td>
-              <td id="save-1500" class="align-middle save-button-cell">
-                <div class="text-center">
-                  <button
-                    class="btn btn-outline-secondary save-button"
-                    type="button"
-                  >
-                    <i class="far fa-save"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr id="16">
-              <th scope="row" class="align-middle time">16:00</th>
-              <td class="input-cell">
-                <textarea class="input-area" id="area-16"></textarea>
-              </td>
-              <td id="save-1600" class="align-middle save-button-cell">
-                <div class="text-center">
-                  <button
-                    class="btn btn-outline-secondary save-button"
-                    type="button"
-                  >
-                    <i class="far fa-save"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr id="17" class="border">
-              <th scope="row" class="align-middle time">17:00</th>
-              <td class="input-cell">
-                <textarea class="input-area" id="area-17"></textarea>
-              </td>
-              <td id="save-1700" class="align-middle save-button-cell">
-                <div class="text-center">
-                  <button
-                    class="btn btn-outline-secondary save-button"
-                    type="button"
-                  >
-                    <i class="far fa-save"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="d-flex pb-2">
-          <div class="pl-1" id="change-div">
-            <nav aria-label="page">
-              <ul class="pagination">
-                <li class="page-item" id="previous">
-                  <a class="page-link" href="#" id="previous-day">Previous</a>
-                </li>
-                <li class="page-item active">
-                  <a class="page-link" href="#" id="current-day">Today</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="#" id="next-day">Next</a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-          <div class="ml-auto pr-1">
-            <button type="button" class="btn btn-danger" id="clear-button">
-              Clear Schedule
+    function generatePlanner(){
+      for (var i = 0; i <= 8; i++) {
+        $(".container").append(
+          `<div class="row" >
+            <div class="col-1 hour ">${i}:00</div>
+            <input class="col-8 input" id="hour${i}" type="text"></input>
+            <button class="col-1 saveBtn" id="${i}">
+              <i id="lockIcon${i}" class="fas fa-unlock"></i>
             </button>
-          </div>
-        </div>
-      </div>
-    </div>
+           </div>`
+        );    
+      }
+    }
 
-    <footer class="footer text-center py-3 bg-dark sticky-footer">
-      <div class="container" id="footer-container">
-        <span class="text-muted">Copyright &copy; 2019 <a class="text-info" href="https://github.com/twopcz">Justin Le</a></span>
-      </div>
-    </footer>
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-      crossorigin="anonymous"
-    ></script>
-    <script src ="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"></script>
-    <script src="assets/script.js"></script>
-  </body>
+      $('.saveBtn').on('click', saveBtn);
+      function saveBtn() {
+        $(this).find('i').toggleClass('fa-unlock fa-lock')
+        var input = $(`#hour${this.id}`);
+        var inputValue = input[0].value;
+        var activity = {
+           hour: `hour${this.id}`,
+           value: inputValue
+        }
+        console.log(activity.hour);
+        console.log(activity.value)
+        if($(this).find('i').hasClass('fa-lock')){
+        // console.log(input);// console.log(inputValue);
+        dailyPlanner.push(activity);
+        console.log(dailyPlanner);
+        localStorage.setItem('dailyPlanner', JSON.stringify(dailyPlanner));
+        // console.log(dailyPlanner);
+        // localStorage.myPlanner = JSON.stringify(dailyPlanner);
+      }
+       if( $(this).find('i').hasClass('fa-unlock') ){
+        dailyPlanner = JSON.parse(localStorage.dailyPlanner);
+        for( let i = 9; i < dailyPlanner.length; i++){
+          if (activity.hour == dailyPlanner[i].hour){
+            console.log(dailyPlanner[i].hour);
+            var index = i;
+            dailyPlanner.splice(index, 1);
+            console.log(dailyPlanner);
+            localStorage.setItem('dailyPlanner', JSON.stringify(dailyPlanner));
+            for (let i = 9; i<dailyPlanner.length; i++){
+              for (var j = 9; j < 17; j++){
+              if(dailyPlanner[i].hour == `hour${j}`)
+              {
+                $(`#hour${j}`).val(dailyPlanner[i].value); 
+              }
+          }
+        }  
+      };
+    };
+  };
+};
+      var time = [09, 10, 11, 12, 13, 14, 15, 16, 17];
+      var btnIcon = $("#saveBtn").val();
+      var x = moment().format("HH");
+      // console.log( x  );
+      for (var i = 0; i < time.length; i++) {
+        if (time[i] == x) {
+          $(`#hour${i}`).addClass("present");
+        } else if (time[i] < x) {
+          $(`#hour${i}`).addClass("past");
+        } else {
+          $(`#hour${i}`).addClass("future");
+        }
+      };  
+    });
+  </script>
+  <script src="moment.js"></script>
+
+</body>
+
 </html>
